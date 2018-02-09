@@ -1,3 +1,4 @@
+/**********uniscope-driver-modify-file-on-qualcomm-platform*****************/
 /*!
  * @section LICENSE
  * (C) Copyright 2013 Bosch Sensortec GmbH All Rights Reserved
@@ -60,7 +61,7 @@
 #define ISR_INFO(dev, fmt, arg...)
 #endif
 
-#define SENSOR_NAME                 "bma2x2-accel"
+#define SENSOR_NAME                 "accelerometer"
 #define ABSMIN                      -512
 #define ABSMAX                      512
 #define SLOPE_THRESHOLD_VALUE       32
@@ -1656,17 +1657,23 @@ static void bma2x2_remap_sensor_data(struct bma2x2acc *val,
 		struct bma2x2_data *client_data)
 {
 	struct bosch_sensor_data bsd;
-
-#ifdef CONFIG_SENSORS_BMI058
+	
+/*wangjing@uni_drv 20150715 modify for L510_MMX begin*/
+#if defined CONFIG_SENSORS_BMI058
 /*x,y need to be invesed becase of HW Register for BMI058*/
 	bsd.y = val->x;
 	bsd.x = val->y;
 	bsd.z = val->z;
+#elif defined UNISCOPE_DRIVER_L510
+    bsd.x = -val->x;
+	bsd.y = val->y;
+	bsd.z = -val->z;
 #else
 	bsd.x = val->x;
 	bsd.y = val->y;
 	bsd.z = val->z;
 #endif
+/*wangjing@uni_drv 20150715 modify for L510_MMX end*/
 
 	bst_remap_sensor_data_dft_tab(&bsd,
 			client_data->pdata->place);
@@ -5024,6 +5031,7 @@ static int bma2x2_read_accel_xyz(struct i2c_client *client,
 #endif
 
 	bma2x2_remap_sensor_data(acc, client_data);
+
 	return comres;
 }
 

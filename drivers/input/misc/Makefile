@@ -1,4 +1,5 @@
 #
+#**********uniscope-driver-modify-file-on-qualcomm-platform*****************#
 # Makefile for the input misc drivers.
 #
 
@@ -76,6 +77,9 @@ obj-$(CONFIG_SENSORS_CAPELLA_CM36283)	+= cm36283.o
 obj-$(CONFIG_SENSORS_MPU6050)		+= mpu6050.o
 obj-$(CONFIG_SENSORS_AKM8963)		+= akm8963.o
 obj-$(CONFIG_SENSORS_AKM09911)		+= akm09911.o
+#kangyan@uniscope_drv add QMC7983 sensor 20150511
+obj-$(CONFIG_SENSORS_QMC7983)	        += qmc7983.o	
+obj-$(CONFIG_QPNP_VIBRA_FFMEMLESS)      += qpnp-vibra.o
 obj-$(CONFIG_SENSORS_ST480)		+= st480.o
 obj-$(CONFIG_SENSORS_LIS3DH)		+= lis3dh_acc.o
 obj-$(CONFIG_SENSORS_AP3426)		+= ap3426.o
@@ -89,6 +93,8 @@ obj-$(CONFIG_SENSORS_YL_PARAMS)		+= yl_sensor_params.o
 obj-$(CONFIG_SENSORS_BMA2X2)	+= bma2x2.o
 obj-$(CONFIG_SENSORS_LTR553)	+= ltr553.o
 obj-$(CONFIG_SENSORS_LTR559)	+= ltr559-lc.o
+#JZZ(zhizhang)@uniscope_drv add MXC400X sensor 20150409
+obj-$(CONFIG_SENSORS_MXC400X)	+= mxc400x.o
 
 obj-$(CONFIG_HUAWEI_ACCEL_SENSORS_KIONIX)		+= kionix_accel_hw.o
 

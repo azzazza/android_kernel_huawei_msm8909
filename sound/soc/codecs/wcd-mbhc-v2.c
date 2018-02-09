@@ -1,3 +1,4 @@
+/**********uniscope-driver-modify-file-on-qualcomm-platform*****************/
 /* Copyright (c) 2014-2015, The Linux Foundation. All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
@@ -43,9 +44,18 @@
 				  SND_JACK_BTN_4 | SND_JACK_BTN_5 | \
 				  SND_JACK_BTN_6 | SND_JACK_BTN_7)
 #define OCP_ATTEMPT 1
+//kangyan@uni_drv 20151030 modify for headset detect slowly
+#if defined UNISCOPE_DRIVER_L510
+#define HS_DETECT_PLUG_TIME_MS (2 * 1000)
+#define SPECIAL_HS_DETECT_TIME_MS (800)
+#define MBHC_BUTTON_PRESS_THRESHOLD_MIN 500
+#else
 #define HS_DETECT_PLUG_TIME_MS (3 * 1000)
 #define SPECIAL_HS_DETECT_TIME_MS (2 * 1000)
 #define MBHC_BUTTON_PRESS_THRESHOLD_MIN 250
+#endif
+
+
 #define GND_MIC_SWAP_THRESHOLD 4
 #define WCD_FAKE_REMOVAL_MIN_PERIOD_MS 100
 #define HS_VREF_MIN_VAL 1400
@@ -1138,8 +1148,13 @@ correct_plug_type:
 		WCD_MBHC_REG_READ(WCD_MBHC_MIC_SCHMT_RESULT, mic_sch);
 		if (hs_comp_res && !(hphl_sch || mic_sch)) {
 			pr_debug("%s: cable is extension cable\n", __func__);
+			#if defined UNISCOPE_DRIVER_L510
+			plug_type = MBHC_PLUG_TYPE_HEADSET;
+			wrk_complete = false;
+			#else
 			plug_type = MBHC_PLUG_TYPE_HIGH_HPH;
 			wrk_complete = true;
+			#endif
 		} else {
 			pr_debug("%s: cable might be headset: %d\n", __func__,
 					plug_type);

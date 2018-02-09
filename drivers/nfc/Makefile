@@ -1,3 +1,4 @@
+#**********uniscope-driver-modify-file-on-qualcomm-platform*****************#
 #
 # Makefile for nfc devices
 #
@@ -10,5 +11,7 @@ obj-$(CONFIG_NFC_MEI_PHY)	+= mei_phy.o
 obj-$(CONFIG_NFC_QNCI)		+= nfc-nci.o
 obj-$(CONFIG_NFC_NQ)		+= nq-nci.o
 obj-$(CONFIG_NFC_PN547)		+= pn547.o
+
+obj-$(CONFIG_NFC_PN547)   += pn544_i2c_driver.o
 
 ccflags-$(CONFIG_NFC_DEBUG) := -DDEBUG

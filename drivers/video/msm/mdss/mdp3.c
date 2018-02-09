@@ -2333,6 +2333,7 @@ int mdp3_splash_done(struct mdss_panel_info *panel_info)
 	return 0;
 }
 
+#ifdef CONFIG_DEBUG_FS
 static int mdp3_debug_dump_stats_show(struct seq_file *s, void *v)
 {
 	struct mdp3_hw_resource *res = (struct mdp3_hw_resource *)s->private;
@@ -2392,6 +2393,7 @@ static void mdp3_debug_deinit(struct platform_device *pdev)
 		mdss_res = NULL;
 	}
 }
+#endif /* CONFIG_DEBUG_FS */
 
 static void mdp3_dma_underrun_intr_handler(int type, void *arg)
 {
@@ -2719,11 +2721,13 @@ static int mdp3_probe(struct platform_device *pdev)
 		goto probe_done;
 	}
 
+#ifdef CONFIG_DEBUG_FS
 	rc = mdp3_debug_init(pdev);
 	if (rc) {
 		pr_err("unable to initialize mdp debugging\n");
 		goto probe_done;
 	}
+#endif
 
 	pm_runtime_set_autosuspend_delay(&pdev->dev, AUTOSUSPEND_TIMEOUT_MS);
 	if (mdp3_res->idle_pc_enabled) {
@@ -2912,7 +2916,9 @@ static int mdp3_remove(struct platform_device *pdev)
 	pm_runtime_disable(&pdev->dev);
 	mdp3_bus_scale_unregister();
 	mdp3_clk_remove();
+#ifdef CONFIG_DEBUG_FS
 	mdp3_debug_deinit(pdev);
+#endif
 	return 0;
 }
 
