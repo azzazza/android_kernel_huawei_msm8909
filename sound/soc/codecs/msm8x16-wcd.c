@@ -4369,6 +4369,13 @@ static const struct snd_soc_dapm_route audio_map[] = {
 #endif
 	{"MIC BIAS External", NULL, "MICBIAS_REGULATOR"},
 	{"MIC BIAS External2", NULL, "MICBIAS_REGULATOR"},
+	/* JZZ(zhizhang)@uniscope_drv for secondary mic can not get 
+	 * bias voltage when only using secondary mic & configue 
+	 * secondary mic bias voltage with MIC BIAS Internal3 20140731 */
+	{"MIC BIAS Internal3", NULL, "INT_LDO_H"},
+	{"MIC BIAS Internal3", NULL, "MICBIAS_REGULATOR"},
+
+	
 #if defined(CONFIG_MACH_T86519A1)
 	{"MIC BIAS External3", NULL, "MICBIAS_REGULATOR"},
 #endif

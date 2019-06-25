@@ -1,3 +1,4 @@
+/**********uniscope-driver-modify-file-on-qualcomm-platform*****************/
 /*
  *  linux/drivers/mmc/core/mmc.c
  *
